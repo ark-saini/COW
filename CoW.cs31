@@ -1,0 +1,176 @@
+<model header>
+"3d network Tube Flow with variable diameter" author="Andreas Linninger" date="8/21/2013"
+"3d network Tube Flow with variable diameter" author="Andreas Linninger" updated "3/6/2020"
+"units for l and d in [mm] for the fMx and pMx files"
+"units for l and d in [m] for the nwk file ---- needs conversion"
+ProblemType = New Flw System
+<meshfile>
+meshfile=CoW.nwk
+<constants>
+MY=0.005
+dt=0.005
+steps=200
+</constants>
+
+<constants>
+PN=1
+MY=0.005
+dt=0.005
+steps=200
+</constants>
+<indices>
+RICA=1
+LICA=102
+BA=65
+
+RACA=76
+LACA=95
+
+RMCA=64
+LMCA=109
+
+RPCA=25
+LPCA=89
+</indices>
+
+<Variables>
+<Pressure VarId=1/>
+<DyeConcentration VarId=2/>
+</variables>
+ 
+<BoundaryConditions>
+bc0=<SubSection VarId=1 ID=1  type=Dirichlet value=13330.00/>
+bc1=<SubSection VarId=1 ID=26  type=Dirichlet value=12000.00/>
+bc2=<SubSection VarId=1 ID=65  type=Dirichlet value=12000.00/>
+bc3=<SubSection VarId=1 ID=66  type=Dirichlet value=13340.00/>
+bc4=<SubSection VarId=1 ID=77  type=Dirichlet value=12000.00/>
+bc5=<SubSection VarId=1 ID=90  type=Dirichlet value=12000.00/>
+bc6=<SubSection VarId=1 ID=96  type=Dirichlet value=12000.00/>
+bc7=<SubSection VarId=1 ID=103  type=Dirichlet value=13330.00/>
+bc8=<SubSection VarId=1 ID=109  type=Dirichlet value=12000.00/>
+bc9=<SubSection VarId=2 ID=1  type=Inlet value=1000.00 duration=0.2/>
+bc10=<SubSection VarId=2 ID=26  type=Outlet value=0/>
+bc11=<SubSection VarId=2 ID=65  type=Outlet value=0/>
+bc12=<SubSection VarId=2 ID=66  type=Inlet value=1000.00 duration=0.2/>
+bc13=<SubSection VarId=2 ID=77  type=Outlet value=0/>
+bc14=<SubSection VarId=2 ID=90  type=Outlet value=0/>
+bc15=<SubSection VarId=2 ID=96  type=Outlet value=0/>
+bc16=<SubSection VarId=2 ID=103  type=Inlet value=1000.00 duration=0.2/>
+bc17=<SubSection VarId=2 ID=109  type=Outlet value=0/>
+</BoundaryConditions>
+
+
+(vector=Dia group=1)
+(N=109 type=variable)
+(13(1 1 6D 0 0)(
+0.005199013
+0.005199013
+0.005199013
+0.005199013
+0.005199013
+0.005199013
+0.005199013
+0.005199013
+0.005199013
+0.005199013
+0.003052302
+0.003052302
+0.003066762
+0.003066762
+0.003066762
+0.003066762
+0.003066762
+0.003909208
+0.003909208
+0.003909208
+0.003909208
+0.003909208
+0.003909208
+0.003909208
+0.003909208
+0.005261111
+0.003217408
+0.003217408
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.003101347
+0.006010634
+0.005564414
+0.002537343
+0.003277542
+0.003277542
+0.003277542
+0.003277542
+0.003277542
+0.003277542
+0.003277542
+0.003277542
+0.003277542
+0.004503456
+0.004503456
+0.004503456
+0.004503456
+0.004236254
+0.004236254
+0.004236254
+0.004236254
+0.004236254
+0.004236254
+0.004236254
+0.004236254
+0.004236254
+0.003216949
+0.003149937
+0.003149937
+0.003149937
+0.003149937
+0.003149937
+0.004355758
+0.004355758
+0.004355758
+0.004355758
+0.004355758
+0.004355758
+0.004355758
+0.003429734
+0.002896345
+0.002896345
+0.002896345
+0.002896345
+0.002896345
+0.002896345
+)
+ 
