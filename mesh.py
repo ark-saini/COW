@@ -89,7 +89,7 @@ def plot_vascular_mesh(faceMx, ptCoordMx, dia):
     plt.title('Vascular Mesh')
     plt.show()
 
-filename = 'cow.cs31'  # Replace with the actual path to your data files without extension
+filename = 'cow.cs31' 
 try:
     faceMx, ptCoordMx, grpMx, dia, BC, np_pts, nf, nt = case_reader(filename)
     plot_vascular_mesh(faceMx, ptCoordMx, dia)
