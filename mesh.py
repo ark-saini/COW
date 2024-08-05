@@ -3,6 +3,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import vtk
+from OCC.Core.BRep import BRep_Builder
+from OCC.Core.BRepBuilderAPI import BRepBuilderAPI_MakeEdge, BRepBuilderAPI_MakeFace, BRepBuilderAPI_MakeWire, BRepBuilderAPI_MakeSolid
+from OCC.Core.BRepPrimAPI import BRepPrimAPI_MakePrism
+from OCC.Core.TopoDS import TopoDS_Compound
+from OCC.Core.STEPControl import STEPControl_Writer, STEPControl_AsIs
+from OCC.Core.gp import gp_Pnt, gp_Dir, gp_Vec
 
 def load_data(filename, ext):
     """Function to load data from a file with the given extension."""
@@ -89,10 +95,34 @@ def plot_vascular_mesh(faceMx, ptCoordMx, dia):
     plt.title('Vascular Mesh')
     plt.show()
 
-filename = 'cow.cs31' 
+def export_to_step(filename, ptCoordMx, faceMx, dia):
+    builder = BRep_Builder()
+    compound = TopoDS_Compound()
+    builder.MakeCompound(compound)
+
+    for face in faceMx:
+        start_idx, end_idx = int(face[1]) - 1, int(face[2]) - 1
+        start_pt = gp_Pnt(*ptCoordMx[start_idx])
+        end_pt = gp_Pnt(*ptCoordMx[end_idx])
+        
+        direction = gp_Dir(gp_Vec(gp_Pnt(*start_pt), gp_Pnt(*end_pt)))
+        edge = BRepBuilderAPI_MakeEdge(start_pt, end_pt).Edge()
+        wire = BRepBuilderAPI_MakeWire(edge).Wire()
+        
+        face = BRepBuilderAPI_MakeFace(wire).Face()
+        prism = BRepPrimAPI_MakePrism(face, gp_Vec(direction.X() * dia[start_idx], direction.Y() * dia[start_idx], direction.Z() * dia[start_idx])).Shape()
+        
+        builder.Add(compound, prism)
+
+    step_writer = STEPControl_Writer()
+    step_writer.Transfer(compound, STEPControl_AsIs)
+    step_writer.Write(filename)
+
+filename = 'cow.cs31'  
 try:
     faceMx, ptCoordMx, grpMx, dia, BC, np_pts, nf, nt = case_reader(filename)
     plot_vascular_mesh(faceMx, ptCoordMx, dia)
     export_to_vtp("vascular_mesh.vtp", ptCoordMx, faceMx)
+    export_to_step("vascular_mesh.stp", ptCoordMx, faceMx, dia)
 except FileNotFoundError as e:
     print(e)
